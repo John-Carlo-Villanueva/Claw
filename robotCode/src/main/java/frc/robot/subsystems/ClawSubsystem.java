@@ -33,10 +33,10 @@ public class ClawSubsystem extends SubsystemBase{
         wristMotor.set(0);
     }
     public void turnCW(){
-        wristMotor.set(.3);
+        wristMotor.set(.1);
     }
     public void turnCCW(){
-        wristMotor.set(-.3);
+        wristMotor.set(-.1);
     }
 
     //Clamping Methods
