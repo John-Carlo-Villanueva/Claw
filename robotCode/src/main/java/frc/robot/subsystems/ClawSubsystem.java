@@ -10,10 +10,12 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class ClawSubsystem extends SubsystemBase{
     
+    // Variables
     private final DoubleSolenoid solenoid;
     private final CANSparkMax wristMotor;
     private RelativeEncoder wristEnc;
 
+    // Conductor
     public ClawSubsystem(){
         solenoid = new DoubleSolenoid(PneumaticsModuleType.CTREPCM, 1, 1);
         wristMotor = new CANSparkMax(1, MotorType.kBrushless);

@@ -5,25 +5,27 @@ import frc.robot.subsystems.ClawSubsystem;
 
 public class ClawClampCmd extends CommandBase{
     
+    // Variables
     private final ClawSubsystem clawSub;
 
+    // Conductor
     public ClawClampCmd(ClawSubsystem clawSub){
         this.clawSub = clawSub;
     }
 
     @Override
-    public void initialize(){}
+    public void initialize(){} // First Action of ClawClampCmd
 
     @Override
     public void execute(){
         clawSub.clamp();
-    }
+    } // Main Action of ClawClampCmd
 
     @Override
-    public void end(boolean interrupted){}
+    public void end(boolean interrupted){} // End Action of ClawClampCmd
 
     @Override
     public boolean isFinished(){
         return false;
-    }
+    } // detects if ClawClampCmd is Finished
 }
