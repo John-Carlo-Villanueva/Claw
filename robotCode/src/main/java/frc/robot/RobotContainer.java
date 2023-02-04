@@ -30,9 +30,9 @@ public class RobotContainer {
   private void configureBindings() {
 
     new JoystickButton(stickA, 1).onTrue(new ClawClampCmd(clawSubsystem));
-    new JoystickButton(stickA, 4).onTrue(new ClawReleaseCmd(clawSubsystem));
+    new JoystickButton(stickA, 2).onTrue(new ClawReleaseCmd(clawSubsystem));
     new JoystickButton(stickA, 3).onTrue(new ClawTCCWCmd(clawSubsystem));
-    new JoystickButton(stickA, 2).onTrue(new ClawTCWCmd(clawSubsystem));
+    new JoystickButton(stickA, 4).onTrue(new ClawTCWCmd(clawSubsystem));
     new Trigger(m_exampleSubsystem::exampleCondition)
         .onTrue(new ExampleCommand(m_exampleSubsystem));
     m_driverController.b().whileTrue(m_exampleSubsystem.exampleMethodCommand());

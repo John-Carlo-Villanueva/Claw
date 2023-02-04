@@ -19,7 +19,7 @@ public class ClawSubsystem extends SubsystemBase{
     // Conductor
     public ClawSubsystem(){
         solenoid = new DoubleSolenoid(PneumaticsModuleType.CTREPCM, 1, 1);
-        wristMotor = new CANSparkMax(1, MotorType.kBrushless);
+        wristMotor = new CANSparkMax(3, MotorType.kBrushless);
         wristEnc = wristMotor.getEncoder();
     }
 
