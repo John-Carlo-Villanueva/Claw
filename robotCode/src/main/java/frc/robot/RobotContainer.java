@@ -29,10 +29,10 @@ public class RobotContainer {
 
   private void configureBindings() {
 
-    new JoystickButton(stickA, 1).onTrue(new ClawClampCmd(clawSubsystem));
-    new JoystickButton(stickA, 2).onTrue(new ClawReleaseCmd(clawSubsystem));
-    new JoystickButton(stickA, 3).onTrue(new ClawTCCWCmd(clawSubsystem));
-    new JoystickButton(stickA, 4).onTrue(new ClawTCWCmd(clawSubsystem));
+    new JoystickButton(stickA, 1).onTrue(new ClawClampCmd(clawSubsystem)); //Button for Clamping arm
+    new JoystickButton(stickA, 2).onTrue(new ClawReleaseCmd(clawSubsystem)); // Button for Releasing arm
+    new JoystickButton(stickA, 3).onTrue(new ClawTCCWCmd(clawSubsystem)); // Button for turning the wrist Counter Clockwise
+    new JoystickButton(stickA, 4).onTrue(new ClawTCWCmd(clawSubsystem)); // Button for turning the wrist Clockwise
     new Trigger(m_exampleSubsystem::exampleCondition)
         .onTrue(new ExampleCommand(m_exampleSubsystem));
     m_driverController.b().whileTrue(m_exampleSubsystem.exampleMethodCommand());

@@ -34,29 +34,29 @@ public class ClawSubsystem extends SubsystemBase{
     // Encoder methods
     public void resetWristEnc(){
         singleChannelEnc.reset();
-    }
+    } //resets wristEnc
     public double getWristEnc(){
         return singleChannelEnc.get();
-    }
+    } // gets wristEnc
 
     //Turning Methods
     public void stopWrist(){
         talon.stopMotor();
-    }
+    } //Stops the wrist from turning
     public void turnCW(){
         talon.set(.5);;
-    }
+    } // Turns the wrist Clockwise
     public void turnCCW(){
         talon.set(-.5);;
-    }
+    }// Turns the wrist Counter Clockwise
 
     //Clamping Methods
     public void release(){
         solenoid.set(Value.kReverse);
-    }
+    } // Opens the claw
     public void clamp(){
         solenoid.set(Value.kForward);
-    }
+    }// Closes the claw
 
     // Angle Limiter Methods
     public void rotCWLimit(){
@@ -64,16 +64,16 @@ public class ClawSubsystem extends SubsystemBase{
             stopWrist();
         }
         turnCW();
-    } 
+    } // Stops Wrist at a certain encoder when turning Clockwise
     public void rotCCWLimit(){
         if(getWristEnc() < -50){
             stopWrist();
         }
         turnCCW();
-    }
+    } // Stops Wrist at a certain encoder when turning Counter Clockwise
 
     @Override
     public void periodic(){
         SmartDashboard.putNumber("Wrist Encoder", getWristEnc());
-    }
+    } // Prints Encoder in SmartDashBoard
 }
