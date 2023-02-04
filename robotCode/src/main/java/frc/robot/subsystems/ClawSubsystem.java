@@ -51,10 +51,10 @@ public class ClawSubsystem extends SubsystemBase{
         talon.stopMotor();
     } //Stops the wrist from turning
     public void turnCW(){
-        talon.set(-.5);;
+        talon.set(-.5);
     } // Turns the wrist Clockwise
     public void turnCCW(){
-        talon.set(.5);;
+        talon.set(.5);
     }// Turns the wrist Counter Clockwise
 
     //Clamping Methods
