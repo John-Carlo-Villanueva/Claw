@@ -33,8 +33,8 @@ public class RobotContainer {
 
     new JoystickButton(stickA, 1).onTrue(new ClawClampCmd(clawSubsystem)); //Button for Clamping arm
     new JoystickButton(stickA, 2).onTrue(new ClawReleaseCmd(clawSubsystem)); // Button for Releasing arm
-    new JoystickButton(stickA, 3).whileTrue(new ClawTCCWCmd(clawSubsystem)); // Button for turning the wrist Counter Clockwise
-    new JoystickButton(stickA, 4).whileTrue(new ClawTCWCmd(clawSubsystem)); // Button for turning the wrist Clockwise
+    new JoystickButton(stickA, 3).onTrue(new ClawTCCWCmd(clawSubsystem)); // Button for turning the wrist Counter Clockwise
+    new JoystickButton(stickA, 4).onTrue(new ClawTCWCmd(clawSubsystem)); // Button for turning the wrist Clockwise
     new JoystickButton(stickA, 5).onTrue(new ClawMidCmd(clawSubsystem));
     new JoystickButton(stickA, 6).onTrue(new InstantCommand(()-> clawSubsystem.resetWristEnc()));
     new Trigger(m_exampleSubsystem::exampleCondition)

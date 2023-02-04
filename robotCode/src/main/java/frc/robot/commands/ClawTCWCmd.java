@@ -1,6 +1,5 @@
 package frc.robot.commands;
 
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.ClawSubsystem;
 
@@ -19,8 +18,8 @@ public class ClawTCWCmd extends CommandBase{
 
     @Override
     public void execute(){
-        SmartDashboard.putNumber("Wrist Encoder", clawSub.getWristEnc());
-        clawSub.turnCW();
+        clawSub.outputMotor(0);
+        //clawSub.turnCW();
         //clawSub.rotCWLimit();
     } // main action of ClawTCWCmd
 

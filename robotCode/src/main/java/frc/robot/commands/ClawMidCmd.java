@@ -1,10 +1,10 @@
 package frc.robot.commands;
 
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.subsystems.ClawSubsystem;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
 public class ClawMidCmd extends CommandBase{
+
      // Variable 
     private final ClawSubsystem clawSub;
 
@@ -14,21 +14,21 @@ public class ClawMidCmd extends CommandBase{
     }
 
     @Override
-    public void initialize(){}// First action of ClawTCCWCmd
+    public void initialize(){}// First action of ClawMidCmd
 
     @Override
     public void execute(){
-        SmartDashboard.putNumber("Wrist Encoder", clawSub.getWristEnc());
-        clawSub.rotMid();
-    }// Main action of ClawTCCWCmd
+        clawSub.outputMotor(65);
+        //clawSub.rotMid();
+    }// Main action of ClawMidCmd
 
     @Override
     public void end(boolean interrupted){
         clawSub.stopWrist();
-    }// end action of ClawTCCWCmd
+    }// end action of ClawMidCmd
 
     @Override
     public boolean isFinished(){
         return false;
-    }// detects if ClawTCCWCmd is finished
+    }// detects if ClawMidCmd is finished
 }
