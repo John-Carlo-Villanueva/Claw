@@ -44,10 +44,10 @@ public class ClawSubsystem extends SubsystemBase{
         talon.stopMotor();
     } //Stops the wrist from turning
     public void turnCW(){
-        talon.set(.5);;
+        talon.set(-.5);;
     } // Turns the wrist Clockwise
     public void turnCCW(){
-        talon.set(-.5);;
+        talon.set(.5);;
     }// Turns the wrist Counter Clockwise
 
     //Clamping Methods
@@ -60,13 +60,22 @@ public class ClawSubsystem extends SubsystemBase{
 
     // Angle Limiter Methods
     public void rotCWLimit(){
-        while(!(getWristEnc() > 50)){
+        if(!(getWristEnc() > 130)){
             turnCW();
         }
         stopWrist();
     } // Stops Wrist at a certain encoder when turning Clockwise
+
+    public void rotMid(){
+        if (getWristEnc() < 60){
+            turnCW();
+        } else if (getWristEnc() > 60){
+            turnCCW();
+        } 
+        stopWrist();
+    }
     public void rotCCWLimit(){
-        while(!(getWristEnc() < -50)){
+        if(!(getWristEnc() < 0)){
             turnCCW();
         }
         stopWrist();

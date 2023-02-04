@@ -3,6 +3,7 @@ package frc.robot;
 import edu.wpi.first.wpilibj.Joystick;
 import frc.robot.subsystems.ClawSubsystem;
 import frc.robot.commands.ClawClampCmd;
+import frc.robot.commands.ClawMidCmd;
 import frc.robot.commands.ClawReleaseCmd;
 import frc.robot.commands.ClawTCCWCmd;
 import frc.robot.commands.ClawTCWCmd;
@@ -11,6 +12,7 @@ import frc.robot.commands.Autos;
 import frc.robot.commands.ExampleCommand;
 import frc.robot.subsystems.ExampleSubsystem;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
@@ -31,8 +33,10 @@ public class RobotContainer {
 
     new JoystickButton(stickA, 1).onTrue(new ClawClampCmd(clawSubsystem)); //Button for Clamping arm
     new JoystickButton(stickA, 2).onTrue(new ClawReleaseCmd(clawSubsystem)); // Button for Releasing arm
-    new JoystickButton(stickA, 3).onTrue(new ClawTCCWCmd(clawSubsystem)); // Button for turning the wrist Counter Clockwise
-    new JoystickButton(stickA, 4).onTrue(new ClawTCWCmd(clawSubsystem)); // Button for turning the wrist Clockwise
+    new JoystickButton(stickA, 3).whileTrue(new ClawTCCWCmd(clawSubsystem)); // Button for turning the wrist Counter Clockwise
+    new JoystickButton(stickA, 4).whileTrue(new ClawTCWCmd(clawSubsystem)); // Button for turning the wrist Clockwise
+    new JoystickButton(stickA, 5).onTrue(new ClawMidCmd(clawSubsystem));
+    new JoystickButton(stickA, 6).onTrue(new InstantCommand(()-> clawSubsystem.resetWristEnc()));
     new Trigger(m_exampleSubsystem::exampleCondition)
         .onTrue(new ExampleCommand(m_exampleSubsystem));
     m_driverController.b().whileTrue(m_exampleSubsystem.exampleMethodCommand());

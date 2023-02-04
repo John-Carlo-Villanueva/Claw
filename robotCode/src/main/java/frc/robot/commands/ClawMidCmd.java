@@ -4,13 +4,12 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.subsystems.ClawSubsystem;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
-public class ClawTCCWCmd extends CommandBase{
-    
-    // Variable 
+public class ClawMidCmd extends CommandBase{
+     // Variable 
     private final ClawSubsystem clawSub;
 
     // Conductor
-    public ClawTCCWCmd(ClawSubsystem clawSub){
+    public ClawMidCmd(ClawSubsystem clawSub){
         this.clawSub = clawSub;
     }
 
@@ -20,13 +19,11 @@ public class ClawTCCWCmd extends CommandBase{
     @Override
     public void execute(){
         SmartDashboard.putNumber("Wrist Encoder", clawSub.getWristEnc());
-        clawSub.turnCCW();
-        //clawSub.rotCCWLimit();
+        clawSub.rotMid();
     }// Main action of ClawTCCWCmd
 
     @Override
     public void end(boolean interrupted){
-        
         clawSub.stopWrist();
     }// end action of ClawTCCWCmd
 
