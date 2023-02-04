@@ -60,16 +60,16 @@ public class ClawSubsystem extends SubsystemBase{
 
     // Angle Limiter Methods
     public void rotCWLimit(){
-        if(getWristEnc() > 50){
-            stopWrist();
+        while(!(getWristEnc() > 50)){
+            turnCW();
         }
-        turnCW();
+        stopWrist();
     } // Stops Wrist at a certain encoder when turning Clockwise
     public void rotCCWLimit(){
-        if(getWristEnc() < -50){
-            stopWrist();
+        while(!(getWristEnc() < -50)){
+            turnCCW();
         }
-        turnCCW();
+        stopWrist();
     } // Stops Wrist at a certain encoder when turning Counter Clockwise
 
     @Override
