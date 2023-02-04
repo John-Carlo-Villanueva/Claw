@@ -52,13 +52,13 @@ public class ClawSubsystem extends SubsystemBase{
 
     // Angle Limiter Methods
     public void rotCWLimit(){
-        if(wristEnc.getPosition() > 10){
+        if(getWristEnc() > 10){
             stopWrist();
         }
         turnCW();
     } 
     public void rotCCWLimit(){
-        if(wristEnc.getPosition() < -10){
+        if(getWristEnc() < -10){
             stopWrist();
         }
         turnCCW();
