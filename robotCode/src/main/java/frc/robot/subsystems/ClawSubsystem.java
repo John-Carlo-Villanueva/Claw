@@ -43,6 +43,7 @@ public class ClawSubsystem extends SubsystemBase{
     } //resets wristEnc
     public double getWristEnc(){
         return singleChannelEnc.get();
+        //return wristEnc.get();
     } // gets wristEnc
 
     //Turning Methods
