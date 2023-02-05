@@ -29,6 +29,9 @@ public class ClawMidCmd extends CommandBase{
 
     @Override
     public boolean isFinished(){
+        if(clawSub.getWristEnc() == 65){
+            return true;
+        }
         return false;
     }// detects if ClawMidCmd is finished
 }

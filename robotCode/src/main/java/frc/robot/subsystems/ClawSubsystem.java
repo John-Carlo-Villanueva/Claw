@@ -27,7 +27,7 @@ public class ClawSubsystem extends SubsystemBase{
     // Conductor
     public ClawSubsystem(){
         previousError = 0;
-        wristPID = new PIDController(0.005, 0.005, 0);
+        wristPID = new PIDController(0.05, 0.05, 0);
         digitalInput = new DigitalInput(5);
         talon = new WPI_TalonSRX(5);
         solenoid = new DoubleSolenoid(PneumaticsModuleType.CTREPCM, 1, 1);
