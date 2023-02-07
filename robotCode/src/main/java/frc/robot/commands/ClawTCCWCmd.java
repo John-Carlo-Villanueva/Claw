@@ -18,9 +18,8 @@ public class ClawTCCWCmd extends CommandBase{
 
     @Override
     public void execute(){
-        clawSub.outputMotor(130);
         //clawSub.turnCCW();
-        //clawSub.rotCCWLimit();
+        clawSub.rotCCWLimit();
     }// Main action of ClawTCCWCmd
 
     @Override

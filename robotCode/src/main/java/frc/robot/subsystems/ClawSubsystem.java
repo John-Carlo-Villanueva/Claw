@@ -67,31 +67,34 @@ public class ClawSubsystem extends SubsystemBase{
 
     // Angle Limiter Methods
     public void rotCWLimit(){
-        if(getWristEnc() > 0){
+        outputMotor(0);
+        /*if(getWristEnc() > 0){
             turnCW();
         }else if (getWristEnc() < 0){
             turnCCW();
         } else {
             stopWrist();
-        }
+        }*/
     } // Stops Wrist at encoder 0
     public void rotMid(){
-        if (getWristEnc() > 65){
+        outputMotor(65);
+        /*if (getWristEnc() > 65){
             turnCW();
         } else if (getWristEnc() < 65){
             turnCCW();
         }else {
             stopWrist();
-        }
+        }*/
     } // Stops Wrist at encoder 65
     public void rotCCWLimit(){
-        if(getWristEnc() < 130){
+        outputMotor(130);
+        /*if(getWristEnc() < 130){
             turnCCW();
         }else if (getWristEnc() > 130){
             turnCW();
         }else {
             stopWrist();
-        }
+        }*/
     } // Stops Wrist at encoder 130
 
     // PID Methods
@@ -125,6 +128,7 @@ public class ClawSubsystem extends SubsystemBase{
         SmartDashboard.putNumber("Elev Enc", getWristEnc());
         SmartDashboard.putNumber("Error", wristPID.calculate(setpoint));
         integrate();
+        talon.set(point);
         //wristMotor.set(point);
     }
 

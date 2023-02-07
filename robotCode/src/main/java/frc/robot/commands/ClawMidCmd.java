@@ -18,8 +18,7 @@ public class ClawMidCmd extends CommandBase{
 
     @Override
     public void execute(){
-        clawSub.outputMotor(65);
-        //clawSub.rotMid();
+        clawSub.rotMid();
     }// Main action of ClawMidCmd
 
     @Override
