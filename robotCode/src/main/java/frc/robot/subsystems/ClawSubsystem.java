@@ -57,6 +57,7 @@ public class ClawSubsystem extends SubsystemBase{
         talon.set(.5);
     }// Turns the wrist Counter Clockwise
     public void setWristMotor(double speed){
+        speed = .1;
         talon.set(speed);
         wristPID.getSetpoint();
         SmartDashboard.putNumber("Setpoint", wristPID.getSetpoint());
