@@ -18,7 +18,7 @@ public class ClawMidCmd extends CommandBase{
 
     @Override
     public void execute(){
-        clawSub.rotMid();
+        clawSub.rotMidLimit();
     }// Main action of ClawMidCmd
 
     @Override

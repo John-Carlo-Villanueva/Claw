@@ -82,7 +82,7 @@ public class ClawSubsystem extends SubsystemBase{
             stopWrist();
         }*/
     } // Stops Wrist at encoder 0
-    public void rotMid(){
+    public void rotMidLimit(){
         outputMotor(65);
         /*if (getWristEnc() > 65){
             turnCW();
