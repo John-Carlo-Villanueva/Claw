@@ -57,7 +57,7 @@ public class ClawSubsystem extends SubsystemBase{
         talon.set(.5);
     }// Turns the wrist Counter Clockwise
     public void setWristMotor(double speed){
-        speed = .1;
+        //speed = .1;
         talon.set(speed);
         wristPID.getSetpoint();
         SmartDashboard.putNumber("Setpoint", wristPID.getSetpoint());
@@ -105,18 +105,18 @@ public class ClawSubsystem extends SubsystemBase{
 
     // PID Methods
     public double proportionality(double setpoint){
-        double error = wristPID.calculate(getWristEnc(), setpoint);
+        double speed = wristPID.calculate(getWristEnc(), setpoint);
         if (wristPID.atSetpoint()){
             return 0;
-        } else if (error > 1){
+        } else if (speed > 1){
             return 1;
-        } else if (error < -1){
+        } else if (speed < -1){
             return -1;
         } else {
-            return error;
+            return speed;
         }
     }
-    public void integrate(){
+    public void integral(){
         double errorSum = wristPID.getPositionError();
         if (errorSum > 0 && previousError < 0){
             wristPID.reset();
@@ -133,7 +133,7 @@ public class ClawSubsystem extends SubsystemBase{
         SmartDashboard.putNumber("Setpoint", setpoint);
         SmartDashboard.putNumber("Elev Enc", getWristEnc());
         SmartDashboard.putNumber("Error", wristPID.calculate(setpoint));
-        integrate();
+        integral();
         talon.set(point);
         //wristMotor.set(point);
     }
