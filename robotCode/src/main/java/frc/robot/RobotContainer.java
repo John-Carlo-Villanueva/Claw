@@ -1,6 +1,7 @@
 package frc.robot;
 
 import edu.wpi.first.wpilibj.Joystick;
+import frc.robot.commands.ClawCmd;
 import frc.robot.subsystems.ClawSubsystem;
 import frc.robot.commands.ClawClampCmd;
 import frc.robot.commands.ClawMidCmd;
@@ -26,6 +27,7 @@ public class RobotContainer {
       new CommandXboxController(OperatorConstants.kDriverControllerPort);
 
   public RobotContainer() {
+    clawSubsystem.setDefaultCommand(new ClawCmd(clawSubsystem, () -> stickA.getZ()));
     configureBindings();
   }
 

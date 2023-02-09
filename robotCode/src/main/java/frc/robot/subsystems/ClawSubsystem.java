@@ -27,7 +27,7 @@ public class ClawSubsystem extends SubsystemBase{
     // Conductor
     public ClawSubsystem(){
         previousError = 0;
-        wristPID = new PIDController(0.05, 0.05, 0);
+        wristPID = new PIDController(0.05, 0.05, 0.1);
         digitalInput = new DigitalInput(5);
         talon = new WPI_TalonSRX(5);
         solenoid = new DoubleSolenoid(PneumaticsModuleType.CTREPCM, 1, 1);
@@ -56,6 +56,11 @@ public class ClawSubsystem extends SubsystemBase{
     public void turnCCW(){
         talon.set(.5);
     }// Turns the wrist Counter Clockwise
+    public void setWristMotor(double speed){
+        talon.set(speed);
+        wristPID.getSetpoint();
+        SmartDashboard.putNumber("Setpoint", wristPID.getSetpoint());
+    }
 
     //Clamping Methods
     public void release(){
