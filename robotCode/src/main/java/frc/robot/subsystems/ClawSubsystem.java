@@ -48,6 +48,11 @@ public class ClawSubsystem extends SubsystemBase{
 
     //Turning Methods
     public void stopWrist(){
+        if (digitalInput.get()){
+            talon.stopMotor();
+            outputMotor(0);
+            resetWristEnc();
+        }
         talon.stopMotor();
     } //Stops the wrist from turning
     public void turnCW(){
@@ -141,5 +146,6 @@ public class ClawSubsystem extends SubsystemBase{
     @Override
     public void periodic(){
         SmartDashboard.putNumber("Wrist Encoder", getWristEnc());
+        SmartDashboard.putBoolean("Digital Input", digitalInput.get());
     } // Prints Encoder in SmartDashBoard
 }

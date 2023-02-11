@@ -11,6 +11,7 @@ public class ClawTCCWCmd extends CommandBase{
     // Conductor
     public ClawTCCWCmd(ClawSubsystem clawSub){
         this.clawSub = clawSub;
+        addRequirements(clawSub);
     }
 
     @Override

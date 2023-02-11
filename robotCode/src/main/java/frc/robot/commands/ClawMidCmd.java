@@ -11,6 +11,7 @@ public class ClawMidCmd extends CommandBase{
     // Conductor
     public ClawMidCmd(ClawSubsystem clawSub){
         this.clawSub = clawSub;
+        addRequirements(clawSub);
     }
 
     @Override
