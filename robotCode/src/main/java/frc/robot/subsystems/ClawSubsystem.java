@@ -42,6 +42,14 @@ public class ClawSubsystem extends SubsystemBase{
         SmartDashboard.putNumber("Wrist Encoder", getWristEnc());
     } // Prints Encoder in SmartDashBoard
 
+    // Deadzone
+    public double deadzone(double speed){
+        if (Math.abs(speed) < 0.1){
+            return 0;
+        }
+        return speed;
+    }
+
     // Encoder methods
     public void resetWristEnc(){
         singleChannelEnc.reset();
@@ -63,7 +71,7 @@ public class ClawSubsystem extends SubsystemBase{
     }// Turns the wrist Counter Clockwise
     public void setWristMotor(double speed){
         //speed = .1;
-        talon.set(speed);
+        talon.set(deadzone(speed));
     }
 
     //Clamping Methods
@@ -76,34 +84,28 @@ public class ClawSubsystem extends SubsystemBase{
 
     // Angle Limiter Methods
     public void rotCWLimit(){
-        outputMotor(0);
-        /*if(getWristEnc() > 0){
-            turnCW();
-        }else if (getWristEnc() < 0){
+        if (getWristEnc() > 0){
             turnCCW();
-        } else {
-            stopWrist();
-        }*/
+        } else if (getWristEnc() < 0){
+            turnCW();
+        }
+        outputMotor(0);
     } // Stops Wrist at encoder 0
     public void rotMidLimit(){
-        outputMotor(65);
-        /*if (getWristEnc() > 60){
-            turnCW();
-        } else if (getWristEnc() < 60){
+        if (getWristEnc() > 65){
             turnCCW();
-        }else {
-            stopWrist();
-        }*/
+        } else if (getWristEnc() < 65){
+            turnCW();
+        }
+        outputMotor(65);
     } // Stops Wrist at encoder 65
     public void rotCCWLimit(){
-        outputMotor(130);
-        /*if(getWristEnc() < 100){
+        if (getWristEnc() > 130){
             turnCCW();
-        }else if (getWristEnc() > 100){
+        } else if (getWristEnc() < 130){
             turnCW();
-        }else {
-            stopWrist();
-        }*/
+        }
+        outputMotor(130);
     } // Stops Wrist at encoder 130
 
     // PID Methods
