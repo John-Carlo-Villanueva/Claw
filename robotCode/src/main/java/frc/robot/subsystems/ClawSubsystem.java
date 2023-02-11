@@ -7,9 +7,9 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.PneumaticsModuleType;
-import com.revrobotics.CANSparkMax;
-import com.revrobotics.RelativeEncoder;
-import com.revrobotics.CANSparkMaxLowLevel.MotorType;
+//import com.revrobotics.CANSparkMax;
+//import com.revrobotics.RelativeEncoder;
+//import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class ClawSubsystem extends SubsystemBase{
@@ -27,7 +27,7 @@ public class ClawSubsystem extends SubsystemBase{
     // Constructor
     public ClawSubsystem(){
         previousError = 0;
-        wristPID = new PIDController(0.0001, 0.01, 0.001);
+        wristPID = new PIDController(0.05, 0, 0);
         digitalInput = new DigitalInput(5);
         talon = new WPI_TalonSRX(5);
         solenoid = new DoubleSolenoid(PneumaticsModuleType.CTREPCM, 1, 1);
@@ -36,6 +36,11 @@ public class ClawSubsystem extends SubsystemBase{
         //wristMotor = new CANSparkMax(3, MotorType.kBrushless);
         //wristEnc = wristMotor.getEncoder();
     }
+
+    @Override
+    public void periodic(){
+        SmartDashboard.putNumber("Wrist Encoder", getWristEnc());
+    } // Prints Encoder in SmartDashBoard
 
     // Encoder methods
     public void resetWristEnc(){
@@ -59,8 +64,6 @@ public class ClawSubsystem extends SubsystemBase{
     public void setWristMotor(double speed){
         //speed = .1;
         talon.set(speed);
-        wristPID.getSetpoint();
-        SmartDashboard.putNumber("Setpoint", wristPID.getSetpoint());
     }
 
     //Clamping Methods
@@ -73,38 +76,38 @@ public class ClawSubsystem extends SubsystemBase{
 
     // Angle Limiter Methods
     public void rotCWLimit(){
-        //outputMotor(0);
-        if(getWristEnc() > 0){
+        outputMotor(0);
+        /*if(getWristEnc() > 0){
             turnCW();
         }else if (getWristEnc() < 0){
             turnCCW();
         } else {
             stopWrist();
-        }
+        }*/
     } // Stops Wrist at encoder 0
     public void rotMidLimit(){
-        //outputMotor(65);
-        if (getWristEnc() > 60){
+        outputMotor(65);
+        /*if (getWristEnc() > 60){
             turnCW();
         } else if (getWristEnc() < 60){
             turnCCW();
         }else {
             stopWrist();
-        }
+        }*/
     } // Stops Wrist at encoder 65
     public void rotCCWLimit(){
-        //outputMotor(130);
-        if(getWristEnc() < 100){
+        outputMotor(130);
+        /*if(getWristEnc() < 100){
             turnCCW();
         }else if (getWristEnc() > 100){
             turnCW();
         }else {
             stopWrist();
-        }
+        }*/
     } // Stops Wrist at encoder 130
 
     // PID Methods
-    public double proportionality(double setpoint){
+    public double proportional(double setpoint){
         double speed = wristPID.calculate(getWristEnc(), setpoint);
         if (wristPID.atSetpoint()){
             return 0;
@@ -112,10 +115,10 @@ public class ClawSubsystem extends SubsystemBase{
             return 1;
         } else if (speed < -1){
             return -1;
-        } else {
-            return speed;
         }
-    }
+        return speed;
+    }// The Proportional of PID
+
     public void integral(){
         double errorSum = wristPID.getPositionError();
         if (errorSum > 0 && previousError < 0){
@@ -126,20 +129,14 @@ public class ClawSubsystem extends SubsystemBase{
         previousError = wristPID.getPositionError();
         SmartDashboard.putNumber("Current Error", errorSum);
         SmartDashboard.putNumber("Previous Error", previousError);
-    }
+    }// The Integral of PID
 
     public void outputMotor(double setpoint){
-        double point = proportionality(setpoint);
+        double point = proportional(setpoint);
         SmartDashboard.putNumber("Setpoint", setpoint);
-        SmartDashboard.putNumber("Wrist Enc", getWristEnc());
         SmartDashboard.putNumber("Error", wristPID.calculate(getWristEnc(), setpoint));
-        integral();
         talon.set(point);
         //wristMotor.set(point);
+        integral();
     }
-
-    @Override
-    public void periodic(){
-        SmartDashboard.putNumber("Wrist Encoder", getWristEnc());
-    } // Prints Encoder in SmartDashBoard
 }

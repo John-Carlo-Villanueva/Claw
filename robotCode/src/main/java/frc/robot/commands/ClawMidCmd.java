@@ -1,6 +1,5 @@
 package frc.robot.commands;
 
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.subsystems.ClawSubsystem;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
@@ -8,8 +7,6 @@ public class ClawMidCmd extends CommandBase{
 
      // Variable 
     private final ClawSubsystem clawSub;
-
-    private int enc;
 
     // Conductor
     public ClawMidCmd(ClawSubsystem clawSub){
@@ -22,9 +19,6 @@ public class ClawMidCmd extends CommandBase{
 
     @Override
     public void execute(){
-
-        enc = clawSub.getWristEnc();
-        SmartDashboard.putNumber("Wrist Encoder", enc);
         clawSub.rotMidLimit();
     }// Main action of ClawMidCmd
 
@@ -35,7 +29,7 @@ public class ClawMidCmd extends CommandBase{
 
     @Override
     public boolean isFinished(){
-        if (clawSub.getWristEnc() >= 65){
+        if (clawSub.getWristEnc() == 65){
             return true;
         }
         return false;
