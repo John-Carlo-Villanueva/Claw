@@ -27,7 +27,6 @@ public class RobotContainer {
       new CommandXboxController(OperatorConstants.kDriverControllerPort);
 
   public RobotContainer() {
-    clawSubsystem.setDefaultCommand(new ClawCmd(clawSubsystem, () -> stickA.getZ()));
     configureBindings();
   }
 
@@ -39,6 +38,7 @@ public class RobotContainer {
     new JoystickButton(stickA, 4).onTrue(new ClawTCWCmd(clawSubsystem)); // Button for turning the wrist Clockwise
     new JoystickButton(stickA, 5).onTrue(new ClawMidCmd(clawSubsystem)); // Button for default position of Claw
     new JoystickButton(stickA, 6).onTrue(new InstantCommand(()-> clawSubsystem.resetWristEnc())); // Button to reset Enc
+    new JoystickButton(stickA, 7).toggleOnTrue(new ClawCmd(clawSubsystem,() ->stickA.getZ()));
     new Trigger(m_exampleSubsystem::exampleCondition)
         .onTrue(new ExampleCommand(m_exampleSubsystem));
     m_driverController.b().whileTrue(m_exampleSubsystem.exampleMethodCommand());

@@ -31,9 +31,6 @@ public class ClawTCCWCmd extends CommandBase{
 
     @Override
     public boolean isFinished(){
-        if(clawSub.getWristEnc() == 130){
-            return true;
-        }
         return false;
     }// detects if ClawTCCWCmd is finished
 }
