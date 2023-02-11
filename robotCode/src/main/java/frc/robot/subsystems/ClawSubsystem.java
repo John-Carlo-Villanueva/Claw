@@ -48,7 +48,7 @@ public class ClawSubsystem extends SubsystemBase{
 
     //Turning Methods
     public void stopWrist(){
-        if (digitalInput.get()){
+        if (digitalInput.get() == true){
             talon.stopMotor();
             outputMotor(0);
             resetWristEnc();
