@@ -24,15 +24,15 @@ public class ClawSubsystem extends SubsystemBase{
     private double previousError;
     //private RelativeEncoder wristEnc;
 
-    // Conductor
+    // Constructor
     public ClawSubsystem(){
         previousError = 0;
-        wristPID = new PIDController(0.05, 0.05, 0.1);
+        wristPID = new PIDController(0.0001, 0.01, 0.001);
         digitalInput = new DigitalInput(5);
         talon = new WPI_TalonSRX(5);
         solenoid = new DoubleSolenoid(PneumaticsModuleType.CTREPCM, 1, 1);
         singleChannelEnc = new SingleChannelEncoder(talon, digitalInput);
-        wristPID.setTolerance(.1);
+        wristPID.setTolerance(1);
         //wristMotor = new CANSparkMax(3, MotorType.kBrushless);
         //wristEnc = wristMotor.getEncoder();
     }
@@ -41,18 +41,13 @@ public class ClawSubsystem extends SubsystemBase{
     public void resetWristEnc(){
         singleChannelEnc.reset();
     } //resets wristEnc
-    public double getWristEnc(){
+    public int getWristEnc(){
         return singleChannelEnc.get();
         //return wristEnc.get();
     } // gets wristEnc
 
     //Turning Methods
     public void stopWrist(){
-        if (digitalInput.get()){
-            talon.stopMotor();
-            outputMotor(0);
-            resetWristEnc();
-        }
         talon.stopMotor();
     } //Stops the wrist from turning
     public void turnCW(){
@@ -78,34 +73,34 @@ public class ClawSubsystem extends SubsystemBase{
 
     // Angle Limiter Methods
     public void rotCWLimit(){
-        outputMotor(0);
-        /*if(getWristEnc() > 0){
+        //outputMotor(0);
+        if(getWristEnc() > 0){
             turnCW();
         }else if (getWristEnc() < 0){
             turnCCW();
         } else {
             stopWrist();
-        }*/
+        }
     } // Stops Wrist at encoder 0
     public void rotMidLimit(){
-        outputMotor(65);
-        /*if (getWristEnc() > 65){
+        //outputMotor(65);
+        if (getWristEnc() > 60){
             turnCW();
-        } else if (getWristEnc() < 65){
+        } else if (getWristEnc() < 60){
             turnCCW();
         }else {
             stopWrist();
-        }*/
+        }
     } // Stops Wrist at encoder 65
     public void rotCCWLimit(){
-        outputMotor(130);
-        /*if(getWristEnc() < 130){
+        //outputMotor(130);
+        if(getWristEnc() < 100){
             turnCCW();
-        }else if (getWristEnc() > 130){
+        }else if (getWristEnc() > 100){
             turnCW();
         }else {
             stopWrist();
-        }*/
+        }
     } // Stops Wrist at encoder 130
 
     // PID Methods
@@ -136,8 +131,8 @@ public class ClawSubsystem extends SubsystemBase{
     public void outputMotor(double setpoint){
         double point = proportionality(setpoint);
         SmartDashboard.putNumber("Setpoint", setpoint);
-        SmartDashboard.putNumber("Elev Enc", getWristEnc());
-        SmartDashboard.putNumber("Error", wristPID.calculate(setpoint));
+        SmartDashboard.putNumber("Wrist Enc", getWristEnc());
+        SmartDashboard.putNumber("Error", wristPID.calculate(getWristEnc(), setpoint));
         integral();
         talon.set(point);
         //wristMotor.set(point);
@@ -146,6 +141,5 @@ public class ClawSubsystem extends SubsystemBase{
     @Override
     public void periodic(){
         SmartDashboard.putNumber("Wrist Encoder", getWristEnc());
-        SmartDashboard.putBoolean("Digital Input", digitalInput.get());
     } // Prints Encoder in SmartDashBoard
 }
