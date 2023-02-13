@@ -54,6 +54,7 @@ public class ClawSubsystem extends SubsystemBase{
     public void resetWristEnc(){
         singleChannelEnc.reset();
     } //resets wristEnc
+
     public int getWristEnc(){
         return singleChannelEnc.get();
         //return wristEnc.get();
@@ -63,12 +64,15 @@ public class ClawSubsystem extends SubsystemBase{
     public void stopWrist(){
         talon.stopMotor();
     } //Stops the wrist from turning
+
     public void turnCW(){
         talon.set(-.5);
     } // Turns the wrist Clockwise
+
     public void turnCCW(){
         talon.set(.5);
     }// Turns the wrist Counter Clockwise
+
     public void setWristMotor(double speed){
         //speed = .1;
         talon.set(deadzone(speed));
@@ -78,6 +82,7 @@ public class ClawSubsystem extends SubsystemBase{
     public void release(){
         solenoid.set(Value.kReverse);
     } // Opens the claw
+
     public void clamp(){
         solenoid.set(Value.kForward);
     }// Closes the claw
@@ -91,6 +96,7 @@ public class ClawSubsystem extends SubsystemBase{
         }
         outputMotor(0);
     } // Stops Wrist at encoder 0
+
     public void rotMidLimit(){
         if (getWristEnc() > 65){
             turnCCW();
@@ -99,6 +105,7 @@ public class ClawSubsystem extends SubsystemBase{
         }
         outputMotor(65);
     } // Stops Wrist at encoder 65
+    
     public void rotCCWLimit(){
         if (getWristEnc() > 130){
             turnCCW();
