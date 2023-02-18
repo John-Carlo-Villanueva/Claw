@@ -1,46 +1,47 @@
 package frc.robot.subsystems;
 
 import edu.wpi.first.math.controller.PIDController;
-import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
+//import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import edu.wpi.first.wpilibj.DigitalInput;
+//import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.PneumaticsModuleType;
-//import com.revrobotics.CANSparkMax;
-//import com.revrobotics.RelativeEncoder;
-//import com.revrobotics.CANSparkMaxLowLevel.MotorType;
+import com.revrobotics.CANSparkMax;
+import com.revrobotics.RelativeEncoder;
+import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class ClawSubsystem extends SubsystemBase{
     
     // Variables
     private final PIDController wristPID;
-    private final DigitalInput digitalInput;
+    //private final DigitalInput digitalInput;
     private final DoubleSolenoid solenoid;
-    //private final CANSparkMax wristMotor;
-    private final WPI_TalonSRX talon;
-    private SingleChannelEncoder singleChannelEnc;
+    private final CANSparkMax wristMotor;
+    //private final WPI_TalonSRX talon;
+    //private SingleChannelEncoder singleChannelEnc;
     private double previousError;
-    //private RelativeEncoder wristEnc;
+    private RelativeEncoder wristEnc;
 
     // Constructor
     public ClawSubsystem(){
         previousError = 0;
-        wristPID = new PIDController(0.05, 0.1, 0);
-        digitalInput = new DigitalInput(5);
-        talon = new WPI_TalonSRX(5);
+        wristPID = new PIDController(0.05, 0.1, 0.001);
+        //digitalInput = new DigitalInput(5);
+        //talon = new WPI_TalonSRX(5);
         solenoid = new DoubleSolenoid(PneumaticsModuleType.CTREPCM, 1, 1);
-        singleChannelEnc = new SingleChannelEncoder(talon, digitalInput);
+        //singleChannelEnc = new SingleChannelEncoder(talon, digitalInput);
         wristPID.setTolerance(1);
-        //wristMotor = new CANSparkMax(3, MotorType.kBrushless);
-        //wristEnc = wristMotor.getEncoder();
+        //singleChannelEnc.reset();
+        wristMotor = new CANSparkMax(3, MotorType.kBrushless);
+        wristEnc = wristMotor.getEncoder();
     }
 
     @Override
     public void periodic(){
         SmartDashboard.putNumber("Wrist Encoder", getWristEnc());
-    } // Prints Encoder in SmartDashBoard
+    } // Prints values in SmartDashBoard
 
     // Deadzone
     public double deadzone(double speed){
@@ -52,30 +53,35 @@ public class ClawSubsystem extends SubsystemBase{
 
     // Encoder methods
     public void resetWristEnc(){
-        singleChannelEnc.reset();
+        //singleChannelEnc.reset();
+        wristEnc.setPosition(0);
     } //resets wristEnc
 
-    public int getWristEnc(){
-        return singleChannelEnc.get();
-        //return wristEnc.get();
+    public double getWristEnc(){
+        //return singleChannelEnc.get();
+        return wristEnc.getPosition();
     } // gets wristEnc
 
     //Turning Methods
     public void stopWrist(){
-        talon.stopMotor();
+        //talon.stopMotor();
+        wristMotor.set(0);
     } //Stops the wrist from turning
 
     public void turnCW(){
-        talon.set(-.5);
+        //talon.set(-.5);
+        wristMotor.set(-.5);
     } // Turns the wrist Clockwise
 
     public void turnCCW(){
-        talon.set(.5);
+        //talon.set(.5);
+        wristMotor.set(0);
     }// Turns the wrist Counter Clockwise
 
     public void setWristMotor(double speed){
         //speed = .1;
-        talon.set(deadzone(speed));
+        //talon.set(deadzone(speed));
+        wristMotor.set(deadzone(speed));
     }
 
     //Clamping Methods
@@ -144,8 +150,8 @@ public class ClawSubsystem extends SubsystemBase{
         double point = proportional(setpoint);
         SmartDashboard.putNumber("Setpoint", setpoint);
         SmartDashboard.putNumber("Error", wristPID.calculate(getWristEnc(), setpoint));
-        talon.set(point);
-        //wristMotor.set(point);
+        //talon.set(point);
+        wristMotor.set(point);
         integral();
     }
 }
