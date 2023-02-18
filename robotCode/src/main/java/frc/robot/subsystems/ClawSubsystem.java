@@ -1,41 +1,41 @@
 package frc.robot.subsystems;
 
 import edu.wpi.first.math.controller.PIDController;
-//import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-//import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.PneumaticsModuleType;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+//import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
+//import edu.wpi.first.wpilibj.DigitalInput;
 
 public class ClawSubsystem extends SubsystemBase{
     
     // Variables
     private final PIDController wristPID;
-    //private final DigitalInput digitalInput;
     private final DoubleSolenoid solenoid;
     private final CANSparkMax wristMotor;
-    //private final WPI_TalonSRX talon;
-    //private SingleChannelEncoder singleChannelEnc;
     private double previousError;
     private RelativeEncoder wristEnc;
+    //private final DigitalInput digitalInput;
+    //private final WPI_TalonSRX talon;
+    //private SingleChannelEncoder singleChannelEnc;
 
     // Constructor
     public ClawSubsystem(){
         previousError = 0;
         wristPID = new PIDController(0.05, 0.1, 0.001);
-        //digitalInput = new DigitalInput(5);
-        //talon = new WPI_TalonSRX(5);
         solenoid = new DoubleSolenoid(PneumaticsModuleType.CTREPCM, 1, 1);
-        //singleChannelEnc = new SingleChannelEncoder(talon, digitalInput);
-        wristPID.setTolerance(1);
-        //singleChannelEnc.reset();
         wristMotor = new CANSparkMax(3, MotorType.kBrushless);
         wristEnc = wristMotor.getEncoder();
+        wristPID.setTolerance(1);
+        //digitalInput = new DigitalInput(5);
+        //talon = new WPI_TalonSRX(5);
+        //singleChannelEnc = new SingleChannelEncoder(talon, digitalInput);
+        //singleChannelEnc.reset();
     }
 
     @Override
@@ -53,35 +53,35 @@ public class ClawSubsystem extends SubsystemBase{
 
     // Encoder methods
     public void resetWristEnc(){
-        //singleChannelEnc.reset();
         wristEnc.setPosition(0);
+        //singleChannelEnc.reset();
     } //resets wristEnc
 
     public double getWristEnc(){
-        //return singleChannelEnc.get();
         return wristEnc.getPosition();
+        //return singleChannelEnc.get();
     } // gets wristEnc
 
     //Turning Methods
     public void stopWrist(){
-        //talon.stopMotor();
         wristMotor.set(0);
+        //talon.stopMotor();
     } //Stops the wrist from turning
 
     public void turnCW(){
-        //talon.set(-.5);
         wristMotor.set(-.5);
+        //talon.set(-.5);
     } // Turns the wrist Clockwise
 
     public void turnCCW(){
-        //talon.set(.5);
         wristMotor.set(0);
+        //talon.set(.5);
     }// Turns the wrist Counter Clockwise
 
     public void setWristMotor(double speed){
+        wristMotor.set(deadzone(speed));
         //speed = .1;
         //talon.set(deadzone(speed));
-        wristMotor.set(deadzone(speed));
     }
 
     //Clamping Methods
