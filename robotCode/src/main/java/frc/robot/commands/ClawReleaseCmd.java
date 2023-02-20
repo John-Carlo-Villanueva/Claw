@@ -15,18 +15,18 @@ public class ClawReleaseCmd extends CommandBase{
     }
 
     @Override
-    public void initialize(){} // First action of ClawReleaseCmd 
+    public void initialize(){
+        clawSub.release();
+    } // First action of ClawReleaseCmd 
 
     @Override
-    public void execute(){
-        clawSub.release();
-    } // Main action of ClawReleaseCmd
+    public void execute(){} // Main action of ClawReleaseCmd
 
     @Override
     public void end(boolean interrupted){} // End action of ClawReleaseCmd
 
     @Override
     public boolean isFinished(){
-        return false;
+        return true;
     } // detects if ClawRelease is finished
 }

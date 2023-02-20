@@ -15,18 +15,18 @@ public class ClawClampCmd extends CommandBase{
     }
 
     @Override
-    public void initialize(){} // First Action of ClawClampCmd
+    public void initialize(){
+        clawSub.clamp();        
+    } // First Action of ClawClampCmd
 
     @Override
-    public void execute(){
-        clawSub.clamp();
-    } // Main Action of ClawClampCmd
+    public void execute(){} // Main Action of ClawClampCmd
 
     @Override
     public void end(boolean interrupted){} // End Action of ClawClampCmd
 
     @Override
     public boolean isFinished(){
-        return false;
+        return true;
     } // detects if ClawClampCmd is Finished
 }
